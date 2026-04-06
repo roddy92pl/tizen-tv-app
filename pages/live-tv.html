@@ -1,0 +1,30 @@
+<!--
+  Live TV page HTML fragment.
+  This file is provided for standalone reference.
+  The application uses the #page-live-tv section embedded in index.html.
+-->
+<section id="page-live-tv" class="page active">
+    <header class="page-header">
+        <button class="back-btn focusable" data-back="home">◀ Back</button>
+        <h1>Live TV</h1>
+        <div class="header-actions">
+            <button id="btn-live-search" class="icon-btn focusable" title="Search channels">🔍</button>
+            <button id="btn-live-favorites" class="icon-btn focusable" title="Show favorites">⭐</button>
+        </div>
+    </header>
+    <div class="search-bar hidden" id="live-search-bar">
+        <input type="text" id="live-search-input" class="search-input focusable"
+               placeholder="Search channels…"/>
+    </div>
+    <div class="two-panel">
+        <aside class="categories-panel" id="live-categories">
+            <div class="category-item focusable active" data-category="all" tabindex="0">All Channels</div>
+            <!-- Categories populated by app.js -->
+        </aside>
+        <main class="content-panel">
+            <div id="channels-grid" class="channels-grid">
+                <!-- Channel cards populated by app.js -->
+            </div>
+        </main>
+    </div>
+</section>

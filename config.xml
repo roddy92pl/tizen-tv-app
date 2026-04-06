@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget xmlns="http://www.w3.org/ns/widgets"
+        xmlns:tizen="http://tizen.org/ns/widgets"
+        id="http://yourdomain/tizeniptv"
+        version="1.0.0">
+    <tizen:application id="IPTVPlayer.tizeniptv" package="IPTVPlayer" required_version="6.0"/>
+    <content src="index.html"/>
+    <feature name="http://tizen.org/feature/screen.size.normal.1080.1920"/>
+    <name>IPTV Player</name>
+    <description>Full-featured IPTV application with Xtream Codes API support</description>
+    <icon src="icon.png"/>
+    <icon src="icon_225.png" width="225" height="225"/>
+    <tizen:privilege name="http://tizen.org/privilege/internet"/>
+    <tizen:privilege name="http://tizen.org/privilege/tv.inputdevice"/>
+    <tizen:privilege name="http://tizen.org/privilege/avplay"/>
+    <tizen:profile name="tv"/>
+    <tizen:metadata key="http://samsung.com/tv/metadata/use.avplay" value="true"/>
+    <tizen:setting screen-orientation="landscape" context-menu="disable" background-support="enable"
+                   encryption="disable" install-location="auto" hwkey-event="enable"/>
+</widget>
