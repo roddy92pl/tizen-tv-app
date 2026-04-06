@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1920">
+  <title>Content Browser TV</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div id="splash-screen">
+    <div class="splash-logo">
+      <span class="logo-icon">&#9654;</span>
+      <span class="logo-text">StreamTV</span>
+    </div>
+  </div>
+
+  <div id="app" class="hidden">
+    <nav id="sidebar">
+      <div class="nav-item" data-index="0"><span class="nav-icon">&#127968;</span><span class="nav-label">Home</span></div>
+      <div class="nav-item" data-index="1"><span class="nav-icon">&#127916;</span><span class="nav-label">Movies</span></div>
+      <div class="nav-item" data-index="2"><span class="nav-icon">&#128250;</span><span class="nav-label">Series</span></div>
+      <div class="nav-item" data-index="3"><span class="nav-icon">&#128269;</span><span class="nav-label">Search</span></div>
+      <div class="nav-item" data-index="4"><span class="nav-icon">&#9881;</span><span class="nav-label">Settings</span></div>
+    </nav>
+    <main id="content">
+      <section id="hero">
+        <div id="hero-bg"></div>
+        <div id="hero-overlay"></div>
+        <div id="hero-info">
+          <div class="hero-meta">
+            <span id="hero-genre"></span>
+            <span class="meta-sep">|</span>
+            <span id="hero-year"></span>
+            <span class="meta-sep">|</span>
+            <span id="hero-rating">&#11088; <span id="hero-rating-val"></span></span>
+            <span class="meta-sep">|</span>
+            <span id="hero-duration"></span>
+          </div>
+          <h1 id="hero-title"></h1>
+          <p id="hero-description"></p>
+          <div class="hero-buttons">
+            <button class="hero-btn primary-btn" id="btn-play" data-hero-btn="0">&#9654; Odtwórz</button>
+            <button class="hero-btn secondary-btn" id="btn-info" data-hero-btn="1">&#9432; Więcej info</button>
+          </div>
+        </div>
+      </section>
+      <div id="rows-container">
+        <div class="row" id="row-0" data-row="0"><h2 class="row-title">&#11088; Polecane</h2><div class="tiles-track" id="track-0"></div></div>
+        <div class="row" id="row-1" data-row="1"><h2 class="row-title">&#9654; Kontynuuj oglądanie</h2><div class="tiles-track" id="track-1"></div></div>
+        <div class="row" id="row-2" data-row="2"><h2 class="row-title">&#128293; Popularne</h2><div class="tiles-track" id="track-2"></div></div>
+        <div class="row" id="row-3" data-row="3"><h2 class="row-title">&#127381; Nowości</h2><div class="tiles-track" id="track-3"></div></div>
+      </div>
+    </main>
+  </div>
+
+  <div id="player-modal" class="hidden">
+    <div class="modal-backdrop"></div>
+    <div class="modal-content">
+      <div class="fake-player">
+        <div class="player-icon">&#9654;</div>
+        <div class="player-info">
+          <h2 id="now-playing-title">Odtwarzanie...</h2>
+          <p id="now-playing-meta"></p>
+        </div>
+      </div>
+      <p class="modal-hint">Naciśnij <strong>BACK</strong> aby wrócić</p>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
