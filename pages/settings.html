@@ -1,0 +1,87 @@
+<!--
+  Settings page HTML fragment.
+  This file is provided for standalone reference.
+  The application uses the #page-settings section embedded in index.html.
+-->
+<section id="page-settings" class="page active">
+    <header class="page-header">
+        <button class="back-btn focusable" data-back="home">◀ Back</button>
+        <h1>Settings</h1>
+    </header>
+    <div class="settings-content">
+
+        <!-- Account Section -->
+        <div class="settings-section">
+            <h2>Account</h2>
+            <div class="settings-info">
+                <div class="info-row"><span>Server:</span>      <strong id="set-server"></strong></div>
+                <div class="info-row"><span>Username:</span>    <strong id="set-username"></strong></div>
+                <div class="info-row"><span>Status:</span>      <strong id="set-status"></strong></div>
+                <div class="info-row"><span>Expiry:</span>      <strong id="set-expiry"></strong></div>
+                <div class="info-row"><span>Connections:</span> <strong id="set-connections"></strong></div>
+            </div>
+            <div class="settings-actions">
+                <button id="btn-refresh-account" class="btn btn-secondary focusable">↺ Refresh Info</button>
+                <button id="btn-logout"          class="btn btn-danger    focusable">⏻ Logout</button>
+            </div>
+        </div>
+
+        <!-- Playback Section -->
+        <div class="settings-section">
+            <h2>Playback</h2>
+            <div class="setting-item">
+                <label>Stream Format</label>
+                <div class="setting-options">
+                    <button class="option-btn focusable active" data-setting="format" data-value="auto">Auto</button>
+                    <button class="option-btn focusable"        data-setting="format" data-value="ts"  >TS</button>
+                    <button class="option-btn focusable"        data-setting="format" data-value="m3u8">M3U8</button>
+                </div>
+            </div>
+            <div class="setting-item">
+                <label>Video Quality</label>
+                <div class="setting-options">
+                    <button class="option-btn focusable active" data-setting="quality" data-value="auto">Auto</button>
+                    <button class="option-btn focusable"        data-setting="quality" data-value="hd"  >HD</button>
+                    <button class="option-btn focusable"        data-setting="quality" data-value="sd"  >SD</button>
+                </div>
+            </div>
+            <div class="setting-item">
+                <label>Subtitle Language</label>
+                <div class="setting-options">
+                    <button class="option-btn focusable active" data-setting="subtitles" data-value="off">Off</button>
+                    <button class="option-btn focusable"        data-setting="subtitles" data-value="en" >English</button>
+                    <button class="option-btn focusable"        data-setting="subtitles" data-value="pl" >Polish</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Parental Control -->
+        <div class="settings-section">
+            <h2>Parental Control</h2>
+            <div class="setting-item">
+                <label>PIN Protection</label>
+                <div class="setting-options">
+                    <button id="btn-set-pin"     class="option-btn focusable">Set PIN</button>
+                    <button id="btn-disable-pin" class="option-btn focusable">Disable PIN</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Profiles -->
+        <div class="settings-section">
+            <h2>Profiles</h2>
+            <div id="profiles-settings-list" class="profiles-list-settings"></div>
+            <button id="btn-add-profile" class="btn btn-secondary focusable">+ Add Profile</button>
+        </div>
+
+        <!-- Data -->
+        <div class="settings-section">
+            <h2>Data</h2>
+            <div class="settings-actions">
+                <button id="btn-clear-cache"   class="btn btn-outline focusable">Clear Cache</button>
+                <button id="btn-clear-history" class="btn btn-outline focusable">Clear History</button>
+            </div>
+        </div>
+
+    </div>
+</section>
