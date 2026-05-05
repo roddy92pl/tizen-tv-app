@@ -1,0 +1,53 @@
+<!--
+  Home page HTML fragment.
+  This file is provided for standalone reference.
+  The application uses the #page-home section embedded in index.html.
+-->
+<section id="page-home" class="page active">
+    <header class="app-header">
+        <div class="header-logo">▶ IPTV Player</div>
+        <div class="header-info">
+            <span id="header-username"></span>
+            <span id="header-expiry" class="expiry-badge"></span>
+        </div>
+        <div class="header-actions">
+            <button id="btn-search-global" class="icon-btn focusable" title="Search">🔍</button>
+        </div>
+    </header>
+    <main class="home-content">
+        <div class="home-menu">
+            <div class="menu-item focusable" data-page="live-tv" tabindex="0">
+                <div class="menu-icon">📺</div>
+                <div class="menu-label">Live TV</div>
+                <div class="menu-count" id="count-live">—</div>
+            </div>
+            <div class="menu-item focusable" data-page="movies" tabindex="0">
+                <div class="menu-icon">🎬</div>
+                <div class="menu-label">Movies</div>
+                <div class="menu-count" id="count-movies">—</div>
+            </div>
+            <div class="menu-item focusable" data-page="series" tabindex="0">
+                <div class="menu-icon">📽</div>
+                <div class="menu-label">Series</div>
+                <div class="menu-count" id="count-series">—</div>
+            </div>
+            <div class="menu-item focusable" data-page="settings" tabindex="0">
+                <div class="menu-icon">⚙</div>
+                <div class="menu-label">Settings</div>
+                <div class="menu-count"></div>
+            </div>
+        </div>
+        <section class="home-section" id="home-continue">
+            <h2 class="section-title">Continue Watching</h2>
+            <div id="continue-list" class="items-row"></div>
+        </section>
+        <section class="home-section" id="home-favorites">
+            <h2 class="section-title">Favorites</h2>
+            <div id="favorites-list" class="items-row"></div>
+        </section>
+        <section class="home-section" id="home-recent">
+            <h2 class="section-title">Recently Watched</h2>
+            <div id="recent-list" class="items-row"></div>
+        </section>
+    </main>
+</section>

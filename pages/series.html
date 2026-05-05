@@ -1,0 +1,48 @@
+<!--
+  Series page HTML fragment.
+  This file is provided for standalone reference.
+  The application uses the #page-series section embedded in index.html.
+-->
+<section id="page-series" class="page active">
+    <header class="page-header">
+        <button class="back-btn focusable" data-back="home">◀ Back</button>
+        <h1>Series</h1>
+        <div class="header-actions">
+            <button id="btn-series-search"    class="icon-btn focusable" title="Search series">🔍</button>
+            <button id="btn-series-favorites" class="icon-btn focusable" title="Show favorites">⭐</button>
+        </div>
+    </header>
+    <div class="search-bar hidden" id="series-search-bar">
+        <input type="text" id="series-search-input" class="search-input focusable"
+               placeholder="Search series…"/>
+    </div>
+
+    <!-- Browse panel: categories + grid -->
+    <div class="two-panel" id="series-browse-panel">
+        <aside class="categories-panel" id="series-categories">
+            <div class="category-item focusable active" data-category="all" tabindex="0">All Series</div>
+            <!-- Categories populated by app.js -->
+        </aside>
+        <main class="content-panel">
+            <div id="series-grid" class="media-grid">
+                <!-- Series cards populated by app.js -->
+            </div>
+        </main>
+    </div>
+
+    <!-- Series detail: seasons + episodes -->
+    <div id="series-detail-panel" class="series-detail hidden">
+        <div class="series-detail-header">
+            <button class="back-btn focusable" id="btn-back-series-list">◀ Back</button>
+            <div class="series-detail-meta">
+                <h2 id="series-detail-title"></h2>
+                <p  id="series-detail-desc"></p>
+            </div>
+            <img id="series-detail-poster" src="" alt="" class="series-poster"/>
+        </div>
+        <div class="series-seasons">
+            <div id="season-tabs"   class="season-tabs"></div>
+            <div id="episodes-list" class="episodes-list"></div>
+        </div>
+    </div>
+</section>

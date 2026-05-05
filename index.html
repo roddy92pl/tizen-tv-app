@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1920">
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' 'unsafe-eval' data: blob:;">
+    <title>IPTV Player</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/player.css">
+</head>
+<body>
+
+<!-- ===== LOADING OVERLAY ===== -->
+<div id="loading-overlay" class="loading-overlay">
+    <div class="spinner"></div>
+    <p id="loading-text">Loading...</p>
+</div>
+
+<!-- ===== TOAST NOTIFICATION ===== -->
+<div id="toast" class="toast"></div>
+
+<!-- ===== MAIN APP CONTAINER ===== -->
+<div id="app">
+
+    <!-- ===== LOGIN PAGE ===== -->
+    <section id="page-login" class="page active">
+        <div class="login-container">
+            <div class="login-logo">
+                <div class="logo-icon">▶</div>
+                <h1>IPTV Player</h1>
+                <p>Powered by Xtream Codes API</p>
+            </div>
+            <form id="login-form" class="login-form" autocomplete="off">
+                <div class="form-group">
+                    <label for="server-url">Server URL</label>
+                    <input type="text" id="server-url" class="focusable" placeholder="http://domain:port"
+                           tabindex="1" autocomplete="off" spellcheck="false"/>
+                </div>
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" class="focusable" placeholder="Enter username"
+                           tabindex="2" autocomplete="off" spellcheck="false"/>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" class="focusable" placeholder="Enter password"
+                           tabindex="3" autocomplete="off"/>
+                </div>
+                <div class="form-row">
+                    <button type="submit" id="btn-login" class="btn btn-primary focusable" tabindex="4">
+                        Connect
+                    </button>
+                </div>
+                <div id="login-error" class="login-error hidden"></div>
+            </form>
+            <div class="login-profiles" id="login-profiles">
+                <h3>Saved Profiles</h3>
+                <div id="profiles-list" class="profiles-list"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== HOME PAGE ===== -->
+    <section id="page-home" class="page">
+        <header class="app-header">
+            <div class="header-logo">▶ IPTV Player</div>
+            <div class="header-info">
+                <span id="header-username"></span>
+                <span id="header-expiry" class="expiry-badge"></span>
+            </div>
+            <div class="header-actions">
+                <button id="btn-search-global" class="icon-btn focusable" title="Search">🔍</button>
+            </div>
+        </header>
+        <main class="home-content">
+            <div class="home-menu">
+                <div class="menu-item focusable" data-page="live-tv" tabindex="0">
+                    <div class="menu-icon">📺</div>
+                    <div class="menu-label">Live TV</div>
+                    <div class="menu-count" id="count-live">—</div>
+                </div>
+                <div class="menu-item focusable" data-page="movies" tabindex="0">
+                    <div class="menu-icon">🎬</div>
+                    <div class="menu-label">Movies</div>
+                    <div class="menu-count" id="count-movies">—</div>
+                </div>
+                <div class="menu-item focusable" data-page="series" tabindex="0">
+                    <div class="menu-icon">📽</div>
+                    <div class="menu-label">Series</div>
+                    <div class="menu-count" id="count-series">—</div>
+                </div>
+                <div class="menu-item focusable" data-page="settings" tabindex="0">
+                    <div class="menu-icon">⚙</div>
+                    <div class="menu-label">Settings</div>
+                    <div class="menu-count"></div>
+                </div>
+            </div>
+            <section class="home-section" id="home-continue">
+                <h2 class="section-title">Continue Watching</h2>
+                <div id="continue-list" class="items-row"></div>
+            </section>
+            <section class="home-section" id="home-favorites">
+                <h2 class="section-title">Favorites</h2>
+                <div id="favorites-list" class="items-row"></div>
+            </section>
+            <section class="home-section" id="home-recent">
+                <h2 class="section-title">Recently Watched</h2>
+                <div id="recent-list" class="items-row"></div>
+            </section>
+        </main>
+    </section>
+
+    <!-- ===== LIVE TV PAGE ===== -->
+    <section id="page-live-tv" class="page">
+        <header class="page-header">
+            <button class="back-btn focusable" data-back="home">◀ Back</button>
+            <h1>Live TV</h1>
+            <div class="header-actions">
+                <button id="btn-live-search" class="icon-btn focusable">🔍</button>
+                <button id="btn-live-favorites" class="icon-btn focusable">⭐</button>
+            </div>
+        </header>
+        <div class="search-bar hidden" id="live-search-bar">
+            <input type="text" id="live-search-input" class="search-input focusable" placeholder="Search channels..."/>
+        </div>
+        <div class="two-panel">
+            <aside class="categories-panel" id="live-categories">
+                <div class="category-item focusable active" data-category="all" tabindex="0">All Channels</div>
+            </aside>
+            <main class="content-panel">
+                <div id="channels-grid" class="channels-grid"></div>
+            </main>
+        </div>
+    </section>
+
+    <!-- ===== MOVIES PAGE ===== -->
+    <section id="page-movies" class="page">
+        <header class="page-header">
+            <button class="back-btn focusable" data-back="home">◀ Back</button>
+            <h1>Movies</h1>
+            <div class="header-actions">
+                <button id="btn-movies-search" class="icon-btn focusable">🔍</button>
+                <button id="btn-movies-favorites" class="icon-btn focusable">⭐</button>
+            </div>
+        </header>
+        <div class="search-bar hidden" id="movies-search-bar">
+            <input type="text" id="movies-search-input" class="search-input focusable" placeholder="Search movies..."/>
+        </div>
+        <div class="two-panel">
+            <aside class="categories-panel" id="movies-categories">
+                <div class="category-item focusable active" data-category="all" tabindex="0">All Movies</div>
+            </aside>
+            <main class="content-panel">
+                <div id="movies-grid" class="media-grid"></div>
+            </main>
+        </div>
+        <!-- Movie details panel -->
+        <div id="movie-details-overlay" class="details-overlay hidden">
+            <div class="details-panel">
+                <div class="details-poster">
+                    <img id="details-poster-img" src="" alt="" onerror="this.style.display='none'"/>
+                    <div id="details-poster-placeholder" class="poster-placeholder">🎬</div>
+                </div>
+                <div class="details-info">
+                    <h2 id="details-title"></h2>
+                    <div class="details-meta">
+                        <span id="details-year" class="meta-badge"></span>
+                        <span id="details-rating" class="meta-badge"></span>
+                        <span id="details-duration" class="meta-badge"></span>
+                        <span id="details-genre" class="meta-badge"></span>
+                    </div>
+                    <p id="details-description" class="details-desc"></p>
+                    <div class="details-actions">
+                        <button id="btn-play-movie" class="btn btn-primary focusable">▶ Play</button>
+                        <button id="btn-resume-movie" class="btn btn-secondary focusable hidden">↺ Resume</button>
+                        <button id="btn-fav-movie" class="btn btn-outline focusable">☆ Favorite</button>
+                    </div>
+                </div>
+                <button class="details-close focusable" id="btn-close-details">✕</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== SERIES PAGE ===== -->
+    <section id="page-series" class="page">
+        <header class="page-header">
+            <button class="back-btn focusable" data-back="home">◀ Back</button>
+            <h1>Series</h1>
+            <div class="header-actions">
+                <button id="btn-series-search" class="icon-btn focusable">🔍</button>
+                <button id="btn-series-favorites" class="icon-btn focusable">⭐</button>
+            </div>
+        </header>
+        <div class="search-bar hidden" id="series-search-bar">
+            <input type="text" id="series-search-input" class="search-input focusable" placeholder="Search series..."/>
+        </div>
+        <div class="two-panel" id="series-browse-panel">
+            <aside class="categories-panel" id="series-categories">
+                <div class="category-item focusable active" data-category="all" tabindex="0">All Series</div>
+            </aside>
+            <main class="content-panel">
+                <div id="series-grid" class="media-grid"></div>
+            </main>
+        </div>
+        <!-- Series detail view -->
+        <div id="series-detail-panel" class="series-detail hidden">
+            <div class="series-detail-header">
+                <button class="back-btn focusable" id="btn-back-series-list">◀ Back</button>
+                <div class="series-detail-meta">
+                    <h2 id="series-detail-title"></h2>
+                    <p id="series-detail-desc"></p>
+                </div>
+                <img id="series-detail-poster" src="" alt="" class="series-poster" onerror="this.style.display='none'"/>
+            </div>
+            <div class="series-seasons">
+                <div id="season-tabs" class="season-tabs"></div>
+                <div id="episodes-list" class="episodes-list"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== SETTINGS PAGE ===== -->
+    <section id="page-settings" class="page">
+        <header class="page-header">
+            <button class="back-btn focusable" data-back="home">◀ Back</button>
+            <h1>Settings</h1>
+        </header>
+        <div class="settings-content">
+            <div class="settings-section">
+                <h2>Account</h2>
+                <div class="settings-info">
+                    <div class="info-row"><span>Server:</span><strong id="set-server"></strong></div>
+                    <div class="info-row"><span>Username:</span><strong id="set-username"></strong></div>
+                    <div class="info-row"><span>Status:</span><strong id="set-status"></strong></div>
+                    <div class="info-row"><span>Expiry:</span><strong id="set-expiry"></strong></div>
+                    <div class="info-row"><span>Connections:</span><strong id="set-connections"></strong></div>
+                </div>
+                <div class="settings-actions">
+                    <button id="btn-refresh-account" class="btn btn-secondary focusable">↺ Refresh Info</button>
+                    <button id="btn-logout" class="btn btn-danger focusable">⏻ Logout</button>
+                </div>
+            </div>
+            <div class="settings-section">
+                <h2>Playback</h2>
+                <div class="setting-item">
+                    <label>Stream Format</label>
+                    <div class="setting-options">
+                        <button class="option-btn focusable active" data-setting="format" data-value="auto">Auto</button>
+                        <button class="option-btn focusable" data-setting="format" data-value="ts">TS</button>
+                        <button class="option-btn focusable" data-setting="format" data-value="m3u8">M3U8</button>
+                    </div>
+                </div>
+                <div class="setting-item">
+                    <label>Video Quality</label>
+                    <div class="setting-options">
+                        <button class="option-btn focusable active" data-setting="quality" data-value="auto">Auto</button>
+                        <button class="option-btn focusable" data-setting="quality" data-value="hd">HD</button>
+                        <button class="option-btn focusable" data-setting="quality" data-value="sd">SD</button>
+                    </div>
+                </div>
+                <div class="setting-item">
+                    <label>Subtitle Language</label>
+                    <div class="setting-options">
+                        <button class="option-btn focusable active" data-setting="subtitles" data-value="off">Off</button>
+                        <button class="option-btn focusable" data-setting="subtitles" data-value="en">English</button>
+                        <button class="option-btn focusable" data-setting="subtitles" data-value="pl">Polish</button>
+                    </div>
+                </div>
+            </div>
+            <div class="settings-section">
+                <h2>Parental Control</h2>
+                <div class="setting-item">
+                    <label>Enable PIN</label>
+                    <div class="setting-options">
+                        <button class="option-btn focusable" id="btn-set-pin">Set PIN</button>
+                        <button class="option-btn focusable" id="btn-disable-pin">Disable PIN</button>
+                    </div>
+                </div>
+            </div>
+            <div class="settings-section">
+                <h2>Profiles</h2>
+                <div id="profiles-settings-list" class="profiles-list-settings"></div>
+                <button id="btn-add-profile" class="btn btn-secondary focusable">+ Add Profile</button>
+            </div>
+            <div class="settings-section">
+                <h2>Data</h2>
+                <div class="settings-actions">
+                    <button id="btn-clear-cache" class="btn btn-outline focusable">Clear Cache</button>
+                    <button id="btn-clear-history" class="btn btn-outline focusable">Clear History</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== VIDEO PLAYER PAGE ===== -->
+    <section id="page-player" class="page player-page">
+        <div id="player-container" class="player-container">
+            <!-- AVPlay embed will go here -->
+            <object id="av-player" class="av-player" type="application/avplayer"></object>
+            <!-- HTML5 fallback -->
+            <video id="html5-player" class="html5-player" preload="none" playsinline></video>
+
+            <!-- Player Controls Overlay -->
+            <div id="player-overlay" class="player-overlay hidden">
+                <div class="player-top-bar">
+                    <div class="player-channel-info">
+                        <img id="player-channel-logo" src="" alt="" class="player-logo" onerror="this.style.display='none'"/>
+                        <div>
+                            <div id="player-title" class="player-title"></div>
+                            <div id="player-subtitle" class="player-subtitle"></div>
+                        </div>
+                    </div>
+                    <div id="player-time" class="player-time"></div>
+                </div>
+
+                <div class="player-bottom-bar">
+                    <div id="player-progress-bar" class="player-progress-bar hidden">
+                        <div id="player-progress" class="player-progress"></div>
+                        <div id="player-buffer" class="player-buffer"></div>
+                    </div>
+                    <div class="player-controls">
+                        <button id="player-btn-stop" class="player-btn focusable">⏹</button>
+                        <button id="player-btn-rw" class="player-btn focusable hidden">⏪</button>
+                        <button id="player-btn-play" class="player-btn player-btn-main focusable">⏸</button>
+                        <button id="player-btn-ff" class="player-btn focusable hidden">⏩</button>
+                        <div class="player-spacer"></div>
+                        <div id="player-position" class="player-position hidden"></div>
+                        <button id="player-btn-back" class="player-btn focusable">✕</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- EPG Info overlay (for live TV) -->
+            <div id="epg-overlay" class="epg-overlay hidden">
+                <div class="epg-current">
+                    <span class="epg-time" id="epg-current-time"></span>
+                    <span class="epg-title" id="epg-current-title"></span>
+                </div>
+                <div class="epg-next">
+                    <span class="epg-time" id="epg-next-time"></span>
+                    <span class="epg-label">Next:</span>
+                    <span class="epg-title" id="epg-next-title"></span>
+                </div>
+                <div class="epg-progress-bar">
+                    <div id="epg-progress" class="epg-progress"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== GLOBAL SEARCH OVERLAY ===== -->
+    <div id="search-overlay" class="search-overlay hidden">
+        <div class="search-container">
+            <div class="search-header">
+                <input type="text" id="global-search-input" class="search-input-large focusable"
+                       placeholder="Search Live TV, Movies, Series..."/>
+                <button id="btn-close-search" class="icon-btn focusable">✕</button>
+            </div>
+            <div id="search-results" class="search-results">
+                <div class="search-section" id="search-live-section">
+                    <h3>Live TV</h3>
+                    <div id="search-live-results" class="search-results-row"></div>
+                </div>
+                <div class="search-section" id="search-movies-section">
+                    <h3>Movies</h3>
+                    <div id="search-movies-results" class="search-results-row"></div>
+                </div>
+                <div class="search-section" id="search-series-section">
+                    <h3>Series</h3>
+                    <div id="search-series-results" class="search-results-row"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== PIN DIALOG ===== -->
+    <div id="pin-dialog" class="dialog-overlay hidden">
+        <div class="dialog">
+            <h2 id="pin-dialog-title">Enter PIN</h2>
+            <div class="pin-dots">
+                <span class="pin-dot" id="dot-0"></span>
+                <span class="pin-dot" id="dot-1"></span>
+                <span class="pin-dot" id="dot-2"></span>
+                <span class="pin-dot" id="dot-3"></span>
+            </div>
+            <div class="pin-numpad">
+                <button class="pin-btn focusable" data-digit="1">1</button>
+                <button class="pin-btn focusable" data-digit="2">2</button>
+                <button class="pin-btn focusable" data-digit="3">3</button>
+                <button class="pin-btn focusable" data-digit="4">4</button>
+                <button class="pin-btn focusable" data-digit="5">5</button>
+                <button class="pin-btn focusable" data-digit="6">6</button>
+                <button class="pin-btn focusable" data-digit="7">7</button>
+                <button class="pin-btn focusable" data-digit="8">8</button>
+                <button class="pin-btn focusable" data-digit="9">9</button>
+                <button class="pin-btn focusable" data-digit="del">⌫</button>
+                <button class="pin-btn focusable" data-digit="0">0</button>
+                <button class="pin-btn pin-btn-cancel focusable" id="pin-cancel">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+</div><!-- #app -->
+
+<script src="js/storage.js"></script>
+<script src="js/xtream-api.js"></script>
+<script src="js/navigation.js"></script>
+<script src="js/player.js"></script>
+<script src="js/app.js"></script>
+
+</body>
+</html>

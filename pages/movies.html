@@ -1,0 +1,56 @@
+<!--
+  Movies page HTML fragment.
+  This file is provided for standalone reference.
+  The application uses the #page-movies section embedded in index.html.
+-->
+<section id="page-movies" class="page active">
+    <header class="page-header">
+        <button class="back-btn focusable" data-back="home">◀ Back</button>
+        <h1>Movies</h1>
+        <div class="header-actions">
+            <button id="btn-movies-search" class="icon-btn focusable" title="Search movies">🔍</button>
+            <button id="btn-movies-favorites" class="icon-btn focusable" title="Show favorites">⭐</button>
+        </div>
+    </header>
+    <div class="search-bar hidden" id="movies-search-bar">
+        <input type="text" id="movies-search-input" class="search-input focusable"
+               placeholder="Search movies…"/>
+    </div>
+    <div class="two-panel">
+        <aside class="categories-panel" id="movies-categories">
+            <div class="category-item focusable active" data-category="all" tabindex="0">All Movies</div>
+            <!-- Categories populated by app.js -->
+        </aside>
+        <main class="content-panel">
+            <div id="movies-grid" class="media-grid">
+                <!-- Movie cards populated by app.js -->
+            </div>
+        </main>
+    </div>
+
+    <!-- Movie Details Overlay -->
+    <div id="movie-details-overlay" class="details-overlay hidden">
+        <div class="details-panel">
+            <div class="details-poster">
+                <img id="details-poster-img" src="" alt=""/>
+                <div id="details-poster-placeholder" class="poster-placeholder">🎬</div>
+            </div>
+            <div class="details-info">
+                <h2 id="details-title"></h2>
+                <div class="details-meta">
+                    <span id="details-year"     class="meta-badge"></span>
+                    <span id="details-rating"   class="meta-badge"></span>
+                    <span id="details-duration" class="meta-badge"></span>
+                    <span id="details-genre"    class="meta-badge"></span>
+                </div>
+                <p id="details-description" class="details-desc"></p>
+                <div class="details-actions">
+                    <button id="btn-play-movie"   class="btn btn-primary focusable">▶ Play</button>
+                    <button id="btn-resume-movie" class="btn btn-secondary focusable hidden">↺ Resume</button>
+                    <button id="btn-fav-movie"    class="btn btn-outline focusable">☆ Favorite</button>
+                </div>
+            </div>
+            <button class="details-close focusable" id="btn-close-details">✕</button>
+        </div>
+    </div>
+</section>
